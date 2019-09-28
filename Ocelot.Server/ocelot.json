@@ -1,0 +1,182 @@
+/*
+ * 需要设置文件属性：复制到输出目录=>始终复制
+ * 参考博文：=>https://www.cnblogs.com/xlxr45/p/11321481.html
+ * https://www.jianshu.com/u/c00ad3bea47f
+ * https://cloud.tencent.com/developer/article/1464437
+ */
+{
+  "ReRoutes": [
+    /***
+     * 负载均衡
+     */
+    //{
+    //  "DownstreamPathTemplate": "/api/values/get", //"/{url}", //下游模板路径，即真实处理请求的路径模板
+    //  "DownstreamScheme": "http", //下游请求法案：如：http,htttps
+    //  "DownstreamHostAndPorts": [ //下游ip、端口
+    //    {
+    //      "Host": "localhost",
+    //      "Port": 8001
+    //    },
+    //    {
+    //      "Host": "localhost",
+    //      "Port": 8002
+    //    }
+    //  ],
+    //  //"ReRouteIsCaseSensitive": false,//路由是否大小写敏感
+    //  "Key": "values",
+    //  "UpstreamPathTemplate": "/values", //上游模板路径，即用户真实请求的链接
+    //  "UpstreamHttpMethod": [ "Get", "Post" ], //上游请求方式
+    //  "LoadBalancerOptions": { //负载均衡选项（有三种）LeastConnection : 将请求发往最空闲的那个服务器、"RoundRobin" "：轮流发送","NoLoadBalance" "：不启用负载均衡，总是发往第一个请求或者服务发现的那个服务器",
+    //    "Type": "RoundRobin"
+    //  }
+    //}
+
+    /*
+     *聚合路由
+     *Key值必须
+     * 添加Aggregates节点
+     */
+    //{
+    //  "DownstreamPathTemplate": "/api/values/get", //"/{url}", //下游模板路径，即真实处理请求的路径模板
+    //  "DownstreamScheme": "http", //下游请求法案：如：http,htttps
+    //  "DownstreamHostAndPorts": [ //下游ip、端口
+    //    {
+    //      "Host": "localhost",
+    //      "Port": 8001
+    //    }
+    //  ],
+    //  "ReRouteIsCaseSensitive": false, //路由是否大小写敏感
+    //  "Key": "values", //聚合路由键
+    //  "UpstreamPathTemplate": "/values", //上游模板路径，即用户真实请求的链接【地址需要不一样】
+    //  "UpstreamHttpMethod": [ "Get", "Post" ], //上游请求方式
+    //  "LoadBalancerOptions": { //负载均衡选项（有三种）LeastConnection : 将请求发往最空闲的那个服务器、"RoundRobin" "：轮流发送","NoLoadBalance" "：不启用负载均衡，总是发往第一个请求或者服务发现的那个服务器",
+    //    "Type": "RoundRobin"
+    //  }
+    //},
+    //{
+    //  "DownstreamPathTemplate": "/api/values/Json", //"/{url}", //下游模板路径，即真实处理请求的路径模板
+    //  "DownstreamScheme": "http", //下游请求法案：如：http,htttps
+    //  "DownstreamHostAndPorts": [ //下游ip、端口
+    //    {
+    //      "Host": "localhost",
+    //      "Port": 8002
+    //    }
+    //  ],
+    //  "Key": "Json", //聚合路由键
+    //  "UpstreamPathTemplate": "/Json", //"/{url}", //上游模板路径，即用户真实请求的链接【地址需要不一样】
+    //  "UpstreamHttpMethod": [ "Get", "Post" ], //上游请求方式
+    //  "LoadBalancerOptions": { //负载均衡选项（有三种）LeastConnection : 将请求发往最空闲的那个服务器、"RoundRobin" "：轮流发送","NoLoadBalance" "：不启用负载均衡，总是发往第一个请求或者服务发现的那个服务器",
+    //    "Type": "RoundRobin"
+    //  }
+    //},
+
+    /*
+     *Consul服务发现
+     *GlobalConfiguration配置中添加ServiceDiscoveryProvider节点
+     */
+    //{
+    //  "UseServiceDiscovery": true, //使用Consul服务发现
+    //  "DownstreamPathTemplate": "/api/values/get",
+    //  "DownstreamScheme": "http",
+    //  "ServiceName": "MyService", //服务名称
+    //  "LoadBalancerOptions": {
+    //    "Type": "RoundRobin"
+    //  },
+    //  "UpstreamPathTemplate": "/get",
+    //  "UpstreamHttpMethod": [ "GET" ],
+    //  "ReRoutesCaseSensitive": false
+    //},
+
+    /**
+     *服务质量
+     *
+     */
+    //{
+    //  "DownstreamPathTemplate": "/api/values/Json",
+    //  "DownstreamScheme": "http",
+    //  "DownstreamHostAndPorts": [
+    //    {
+    //      "Host": "localhost",
+    //      "Port": 8001
+    //    }
+    //  ],
+    //  "UpstreamPathTemplate": "/get",
+    //  "UpstreamHttpMethod": ["GET"],
+    //  "ReRoutesCaseSensitive": false,
+    //  "QoSOptions": { //服务质量
+    //    "ExceptionAllowedBeforeBreaking": 2, //该值必须大于0，该值是指当异常发生达到此值断路器会中断。
+    //    "DurationOfBreak": 5000, //该值指定断路器中断后会保持多久。该值的单位是毫秒。
+    //    "TimeoutValue": 2000 //该值指定当请求超过此值会被自动设置为超时。同样该值的单位是毫秒。 
+    //  }
+    //}
+
+    /**
+     * 限流配置
+     *GlobalConfiguration 中的RateLimitOptions进行限流配置全局配置
+     */
+    //{
+    //  "DownstreamPathTemplate": "/api/values/get", //"/{url}", //下游模板路径，即真实处理请求的路径模板
+    //  "DownstreamScheme": "http", //下游请求法案：如：http,htttps
+    //  "DownstreamHostAndPorts": [ //下游ip、端口
+    //    {
+    //      "Host": "localhost",
+    //      "Port": 8001
+    //    }
+    //  ],
+    //  "ReRouteIsCaseSensitive": false, //路由是否大小写敏感
+    //  "UpstreamPathTemplate": "/values", //上游模板路径，即用户真实请求的链接【地址需要不一样】
+    //  "UpstreamHttpMethod": [ "Get", "Post" ], //上游请求方式
+    //  "RateLimitOptions": { //限流配置
+    //    "ClientWhitelist": [],//在请求头中包含ClientId=xxx的请求不受限流控制,xxx表示配置的白名单
+    //    "EnableRateLimiting": true, //开启限流
+    //    "Period": "1s",//限流控制的时间段，可以输入 1s（1秒），1m（1分），1h（1小时），1d（1天）
+    //    "PeriodTimespan": 1,//超过限流限制的次数后，需要等待重置的时间（单位是秒）
+    //    "Limit": 1//在Period时间内最大能访问的数量。
+    //  }
+    //},
+
+    /*
+     *授权服务
+     * 
+     */
+    {
+      "DownstreamPathTemplate": "/api/values/get", //"/{url}", //下游模板路径，即真实处理请求的路径模板
+      "DownstreamScheme": "http", //下游请求法案：如：http,htttps
+      "DownstreamHostAndPorts": [ //下游ip、端口
+        {
+          "Host": "localhost",
+          "Port": 8001
+        }
+      ],
+      "ReRouteIsCaseSensitive": false, //路由是否大小写敏感
+      "UpstreamPathTemplate": "/values", //上游模板路径，即用户真实请求的链接【地址需要不一样】
+      "UpstreamHttpMethod": [ "Get", "Post" ], //上游请求方式
+      "AuthenticationOptions": { //授权服务配置
+        "AuthenticationProviderKey": "OcelotAuth", //这里与Startup.cs AddJwtBearer参数一致
+        "AllowedScopes": []
+      }
+    }
+  ],
+  //"Aggregates": [//聚合路由
+  //  {
+  //    "ReRouteKeys": [
+  //      "values",
+  //      "Json"
+  //    ],
+  //    "UpstreamPathTemplate": "/JsonVal" //上流统一请求地址
+  //  }
+  //],
+  "GlobalConfiguration": {
+    //"ServiceDiscoveryProvider": { //Consul 服务发现
+    //  "Host": "localhost",
+    //  "Port": "8500",
+    //  "Type": "PollConsul", //1. Consul, 意味每次请求Ocelot会从consul获得服务信息;2. PollConsul, 意味着Ocelot将向Consul推荐最新的服务信息
+    //  "PollingInterval": 100 // 告诉Ocelot多长时间调用Consul来更改服务配置
+    //}
+    //"RateLimitOptions": { //流量限制
+    //  "DisableRateLimitHeaders": false, //是否显示X-Rate-Limit和Retry-After头
+    //  "QuotaExceededMessage": "From Custom tips ", //超限提示信息
+    //  "HttpStatusCode": 999 //当流量限制后返回的状态码
+    //}
+  }
+}
